@@ -1,3 +1,25 @@
 <resources>
     <string name="app_name">Aula 05 Twitter</string>
+    <string name="searchURL">https://mobile.twitter.com/search/</string>
+    <string name="tagPrompt">Marque sua busca</string>
+    <string name="queryPrompt">Entre com a busca no Twitter aqui</string>
+    <string name="taggedSearches">Buscas Marcadas</string>
+    <string name="saveDescription">Toque no botão para salvar sua busca marcada</string>
+    <string name="shareEditDeleteTitle">Compartilhe, Edite ou Delete as buscas marcadas
+    como \"%s\"</string>
+    <string-array name="dialog_items">
+        <item>Compartilhe</item>
+        <item>Edite</item>
+        <item>Delete</item>
+    </string-array>
+
+    <string name="shareSubject">Busca no Twitter que pode interessar a você</string>
+    <string name="shareMessage">Confira os resultados desta busca no Twitter: %s</string>
+    <string name="shareSearch">Pesquisa compartilhada para:</string>
+    <string name="cancel">Cancelar</string>
+    <string name="OK">OK</string>
+    <string name="confirmMessage">Está certo que quer deletar a busca \"%s\"?</string>
+    <string name="delete">Delete</string>
+    <string name="missingMessage">Entre tanto com a busca no Twitter quanto com a
+    marcação</string>
 </resources>
