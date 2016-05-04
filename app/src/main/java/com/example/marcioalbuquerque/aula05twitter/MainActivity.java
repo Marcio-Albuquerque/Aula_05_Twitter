@@ -96,7 +96,30 @@ public class MainActivity extends ListActivity {
         }
     };
 
-
+    //Slide 07
+    OnItemLongClickListener itemLongClickListener = new OnItemLongClickListener() {
+        public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id)
+        {
+            final String tag = ((TextView) view).getText().toString();
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            builder.setTitle(getString(R.string.shareEditDeleteTitle, tag));
+            builder.setItems(R.array.dialog_items, new DialogInterface.OnClickListener(){
+                        public void onClick(DialogInterface dialog, int which){
+                            switch (which){
+                                case 0:
+                                    shareSearch(tag);
+                                    break;
+                                case 1:
+                                    tagEditText.setText(tag);
+                                    queryEditText.setText(savedSearches.getString(tag, ""));
+                                    break;
+                                case 2:
+                                    deleteSearch(tag);
+                                    break;
+                            }
+                        }
+                    }
+            );
 }
 
 
