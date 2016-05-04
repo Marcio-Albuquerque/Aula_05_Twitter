@@ -74,6 +74,29 @@ public class MainActivity extends ListActivity {
             }
         }
     };
+
+    //Slide 06
+
+    private void addTaggedSearch(String query, String tag){
+        SharedPreferences.Editor preferencesEditor = savedSearches.edit();
+        preferencesEditor.putString(tag, query);
+        preferencesEditor.apply();
+        if (!tags.contains(tag)) {
+            tags.add(tag);
+            Collections.sort(tags, String.CASE_INSENSITIVE_ORDER);
+            adapter.notifyDataSetChanged();
+        }
+    }
+    OnItemClickListener itemClickListener = new OnItemClickListener() {
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            String tag = ((TextView) view).getText().toString();
+            String urlString = getString(R.string.searchURL) + Uri.encode(savedSearches.getString(tag, ""), "UTF-8");
+            Intent webIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(urlString));
+            startActivity(webIntent);
+        }
+    };
+
+
 }
 
 
