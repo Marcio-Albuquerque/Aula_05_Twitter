@@ -101,25 +101,78 @@ public class MainActivity extends ListActivity {
         public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id)
         {
             final String tag = ((TextView) view).getText().toString();
-            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            AlertDialog.Builder builder =
+                    new AlertDialog.Builder(MainActivity.this);
             builder.setTitle(getString(R.string.shareEditDeleteTitle, tag));
-            builder.setItems(R.array.dialog_items, new DialogInterface.OnClickListener(){
-                        public void onClick(DialogInterface dialog, int which){
-                            switch (which){
+            builder.setItems(R.array.dialog_items,
+                    new DialogInterface.OnClickListener()
+                    {
+                        public void onClick(DialogInterface dialog, int which)
+                        {
+                            switch (which)
+                            {
                                 case 0:
-                                    shareSearch(tag);
-                                    break;
+                                    shareSearch(tag); break;
                                 case 1:
                                     tagEditText.setText(tag);
-                                    queryEditText.setText(savedSearches.getString(tag, ""));
-                                    break;
+                                    queryEditText.setText(savedSearches.getString(tag, "")); break;
                                 case 2:
-                                    deleteSearch(tag);
-                                    break;
+                                    deleteSearch(tag); break;
                             }
                         }
                     }
             );
+
+            //Slide 08
+            builder.setNegativeButton(getString(R.string.cancel),
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    }
+            );
+            builder.create().show(); return true;
+        }
+    };
+    private void shareSearch(String tag)
+    {
+        String urlString = getString(R.string.searchURL) +
+                Uri.encode(savedSearches.getString(tag, ""), "UTF-8");
+        Intent shareIntent = new Intent();
+        shareIntent.setAction(Intent.ACTION_SEND);
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.shareSubject));
+        shareIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.shareMessage, urlString));
+        shareIntent.setType("text/plain");
+        startActivity(Intent.createChooser(shareIntent, getString(R.string.shareSearch)));
+    }
+
+    //Slide 09
+    private void deleteSearch(final String tag)
+    {
+        AlertDialog.Builder confirmBuilder = new AlertDialog.Builder(this);
+        confirmBuilder.setMessage(getString(R.string.confirmMessage, tag));
+        confirmBuilder.setNegativeButton( getString(R.string.cancel),
+                new DialogInterface.OnClickListener()
+                {
+                    public void onClick(DialogInterface dialog, int id)
+                    {
+                        dialog.cancel();
+                    }
+                }
+        );
+        confirmBuilder.setPositiveButton(getString(R.string.delete), new DialogInterface.OnClickListener()
+                {
+                    public void onClick(DialogInterface dialog, int id)
+                    {
+                        tags.remove(tag);
+                        SharedPreferences.Editor preferencesEditor = savedSearches.edit();
+                        preferencesEditor.remove(tag);
+                        preferencesEditor.apply();
+                        adapter.notifyDataSetChanged();
+                    } }
+            );
+        confirmBuilder.create().show();
+    }
 }
 
 
