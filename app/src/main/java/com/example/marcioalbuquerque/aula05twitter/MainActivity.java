@@ -53,4 +53,28 @@ public class MainActivity extends ListActivity {
         getListView().setOnItemClickListener(itemClickListener);
         getListView().setOnItemLongClickListener(itemLongClickListener);
     }
+    //Slide 05
+    public OnClickListener saveButtonListener = new OnClickListener(){
+        public void onClick(View v){
+            if (queryEditText.getText().length() > 0 && tagEditText.getText().length() > 0) {
+                addTaggedSearch(queryEditText.getText().toString(),
+                        tagEditText.getText().toString());
+                queryEditText.setText("");
+                tagEditText.setText("");
+                ((InputMethodManager) getSystemService(
+                        Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(
+                        tagEditText.getWindowToken(), 0);
+            }
+            else
+            {
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setMessage(R.string.missingMessage);
+                builder.setPositiveButton(R.string.OK, null);
+                AlertDialog errorDialog = builder.create(); errorDialog.show();
+            }
+        }
+    };
 }
+
+
+
